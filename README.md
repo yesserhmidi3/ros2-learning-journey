@@ -69,6 +69,17 @@ Flow:
 
 **Skills learned:** Full-duplex MCU ↔ ROS2 interaction.
 
+### 9) OpenCV + MediaPipe ROS2 Project (Personal project)
+
+After finishing the mini-projects, I created a small personal project to see what I could do with ROS2 and apply some computer vision.  
+
+**Goal:** Use a camera to detect hand landmarks with MediaPipe and send commands to control LEDs on the ESP32 via micro-ROS.  
+
+**Skills learned:**  
+- Integrating OpenCV and MediaPipe with ROS2  
+- Debugging library installation and compatibility issues  
+- Applying ROS2 concepts to a real-world scenario  
+
 ---
 
 Before going through the projects one by one, I’ll first explain how to create a ROS2 project, how to run it, and how to run a micro-ROS program.
