@@ -206,7 +206,8 @@ There are **6 templates** in total:
 2. **Subscriber** – basic ROS2 Python subscriber  
 3. **Publisher + Subscriber** – combination template for full-duplex communication
 
-Each template includes all the necessary setup and boilerplate code. You can copy it directly, understand each part, and then adapt it to your project’s goals.
+I started using these templates beginning from project 4, and they made the workflow much faster and cleaner.  
+Each template includes all the necessary setup and boilerplate code. You can copy it directly, understand each part, and then adapt it to your project’s goals.  
 
 ---
 
