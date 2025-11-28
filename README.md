@@ -80,7 +80,7 @@ source /opt/ros/jazzy/setup.bash
 
 Add it to `~/.bashrc` to do it automatically:
 nano ~/.bashrc
-# add at the end:
+add at the end:
 source /opt/ros/jazzy/setup.bash
 
 ### 2) Create a workspace
@@ -96,7 +96,7 @@ source install/setup.bash
 ### 5) Shortcut: build + source
 Add alias to `~/.bashrc`:
 nano ~/.bashrc
-# add at the end:
+add at the end:
 alias ccb='colcon build && source install/setup.bash'
 
 Now typing `ccb` builds and sources in one step.
@@ -137,7 +137,7 @@ ccb
 ### 12) Run your ROS2 program
 ros2 run name_of_your_package first_pub
 
-### 13) Check topics
+### 13) Check topics (optional)
 ros2 topic list
 ros2 topic echo /topic_name
 
