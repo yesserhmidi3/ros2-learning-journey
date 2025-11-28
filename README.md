@@ -1,7 +1,3 @@
-# ros2-learning-journey
-My personal journey learning ROS2 and micro-ROS through small practical mini-projects, notes, and examples.
-
-
 # ROS2 Learning Journey
 
 In this repo I’ll talk about my ROS2 learning journey. I’ll add the source code, explain everything I did, the problems I found, and how I solved them.
