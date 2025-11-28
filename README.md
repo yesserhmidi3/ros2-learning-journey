@@ -160,6 +160,7 @@ Note: Since the ESP32 is connected to Arduino IDE, the agent won’t work until 
 
 3) In another terminal, source ROS2 and workspace again:
 source /opt/ros/jazzy/setup.bash  # or bashrc
+
 source ~/microros_ws/install/local_setup.bash  # or bashrc
 
 To see topics from the ESP32:
