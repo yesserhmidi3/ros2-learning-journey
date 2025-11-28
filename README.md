@@ -213,21 +213,23 @@ Each template includes all the necessary setup and boilerplate code. You can cop
 ## Repository Overview / Folder Structure  
 
 Here’s how the repository is organized:  
-/templates  
-    /python_ros2 # Publisher, Subscriber, Publisher+Subscriber templates  
-    /esp32_microros # Publisher, Subscriber, Publisher+Subscriber templates  
-/mini_projects  
-    /project1 # ESP32 Counter Publisher  
-    /project2 # LED Control Subscriber  
-    /project3 # LED Control Subscriber  
-    /project4 # LED Control Subscriber  
-    /project5 # LED Control Subscriber  
-    /project6 # LED Control Subscriber  
-    /project7 # LED Control Subscriber  
-    /project8 # LED Control Subscriber  
-    /project9 # OpenCV + MediaPipe ROS2 Project  
-README.md  
 
+/templates  
+    /python_ros2       # Publisher, Subscriber, Publisher+Subscriber templates  
+    /esp32_microros    # Publisher, Subscriber, Publisher+Subscriber templates  
+
+/mini_projects  
+    /project1          # ESP32 Counter Publisher  
+    /project2          # LED Control Subscriber  
+    /project3          # Button Publisher  
+    /project4          # Potentiometer Publisher  
+    /project5          # LED Dimmer Subscriber  
+    /project6          # Ultrasonic Sensor Publisher  
+    /project7          # Joystick Control  
+    /project8          # Bi-directional Communication  
+    /project9          # OpenCV + MediaPipe ROS2 Project  
+
+README.md
 
 This structure helps you quickly find the templates and mini-projects, and see how everything fits together.  
 
