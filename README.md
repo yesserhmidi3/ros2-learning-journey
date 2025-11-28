@@ -1,10 +1,10 @@
 # ROS2 Learning Journey
 
-In this repo I’ll talk about my ROS2 learning journey. I’ll add the source code, explain everything I did, the problems I found, and how I solved them.
+In this repo I’ll talk about my ROS2 learning journey. I’ll add the source code, explain everything I did, the problems I found, and how I solved them.  
 
 For me, it’s always been hard to learn something by following a full course, watching YouTube videos, or reading long documentation. The best way I learn is simply by practicing.  
 So when I decided to learn ROS2, I read a little bit of a ROS 2 Documentation documentation ([documentation link](https://docs.ros.org/en/kilted/Tutorials.html)), and I watched a video from a German YouTuber who made a simple ROS2 counter publisher just to get an idea of what I was going to do ([video link](https://www.youtube.com/watch?v=NDHHPFJnqXY)).  
-After that, I looked for mini-projects. I already knew the concepts I needed to learn, so I gave ChatGPT the materials I had available and asked it to create mini projects that would help me learn ROS2 Jazzy + micro-ROS.
+After that, I looked for mini-projects. I already knew the concepts I needed to learn, so I gave ChatGPT the materials I had available and asked it to create mini projects that would help me learn ROS2 Jazzy + micro-ROS.  
 
 In this journey, I worked with an ESP32 (for micro-ROS) and Ubuntu 24.04 (ROS2 Jazzy).
 
@@ -78,52 +78,52 @@ After finishing the mini-projects, I created a small personal project to see wha
 **Skills learned:**  
 - Integrating OpenCV and MediaPipe with ROS2  
 - Debugging library installation and compatibility issues  
-- Applying ROS2 concepts to a real-world scenario  
+- Applying ROS2 concepts to a real-world scenario   
 
 ---
 
-Before going through the projects one by one, I’ll first explain how to create a ROS2 project, how to run it, and how to run a micro-ROS program.
+Before going through the projects one by one, I’ll first explain how to create a ROS2 project, how to run it, and how to run a micro-ROS program.  
 
-## How to Create and Run a ROS2 Project
+## How to Create and Run a ROS2 Project  
 
-### 1) Source ROS2
-source /opt/ros/jazzy/setup.bash
+### 1) Source ROS2  
+source /opt/ros/jazzy/setup.bash  
 
-Add it to `~/.bashrc` to do it automatically:
-nano ~/.bashrc
-add at the end:
-source /opt/ros/jazzy/setup.bash
+Add it to `~/.bashrc` to do it automatically:  
+nano ~/.bashrc  
+add at the end:  
+source /opt/ros/jazzy/setup.bash  
 
-### 2) Create a workspace
-mkdir -p ros2_ws/src
-cd ros2_ws
+### 2) Create a workspace  
+mkdir -p ros2_ws/src  
+cd ros2_ws  
 
-### 3) Initialize workspace
-colcon build
+### 3) Initialize workspace  
+colcon build  
 
-### 4) Source workspace
-source install/setup.bash
+### 4) Source workspace  
+source install/setup.bash  
 
-### 5) Shortcut: build + source
-Add alias to `~/.bashrc`:
-nano ~/.bashrc
-add at the end:
-alias ccb='colcon build && source install/setup.bash'
+### 5) Shortcut: build + source  
+Add alias to `~/.bashrc`:  
+nano ~/.bashrc  
+add at the end:  
+alias ccb='colcon build && source install/setup.bash'  
 
-Now typing `ccb` builds and sources in one step.
+Now typing `ccb` builds and sources in one step.  
 
-### 6) Create a Python ROS2 package
-cd src
-ros2 pkg create --build-type ament_python name_of_your_package
+### 6) Create a Python ROS2 package  
+cd src  
+ros2 pkg create --build-type ament_python name_of_your_package  
 
-### 7) Build workspace again
-cd ..
-ccb
+### 7) Build workspace again  
+cd ..  
+ccb  
 
 ### 8) Write ROS2 code
-Open VS Code:
-cd src
-code .
+Open VS Code:  
+cd src  
+code .  
 
 Create a new Python file (example: `first_publisher.py`) inside your package folder.  
 Do not write ROS2 code in `__init__.py`.
@@ -135,55 +135,55 @@ entry_points={
     ],
 },
 
-Format:
-"command_name = package_name.python_file_name:main"
+Format:  
+"command_name = package_name.python_file_name:main"  
 
 ### 10) Add dependencies in `package.xml`
-<exec_depend>rclpy</exec_depend>
-<exec_depend>std_msgs</exec_depend>
+<exec_depend>rclpy</exec_depend>  
+<exec_depend>std_msgs</exec_depend>  
 
-### 11) Build and source
-ccb
+### 11) Build and source  
+ccb  
 
-### 12) Run your ROS2 program
-ros2 run name_of_your_package first_pub
+### 12) Run your ROS2 program  
+ros2 run name_of_your_package first_pub  
 
-### 13) Check topics (optional)
-ros2 topic list
-ros2 topic echo /topic_name
+### 13) Check topics (optional)  
+ros2 topic list  
+ros2 topic echo /topic_name  
 
 ---
 
-## How to Run a micro-ROS Program on ESP32
+## How to Run a micro-ROS Program on ESP32  
 
-1) Upload your sketch to ESP32
+1) Upload your sketch to ESP32  
 
 2) Start the micro-ROS Agent  
-Source ROS2 and workspace:
-source /opt/ros/jazzy/setup.bash   # or add to bashrc
-source ~/microros_ws/install/local_setup.bash  # or add to bashrc
+Source ROS2 and workspace:  
+source /opt/ros/jazzy/setup.bash   # or add to bashrc  
+source ~/microros_ws/install/local_setup.bash  # or add to bashrc  
 
-Run the agent (serial communication):
-ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
+Run the agent (serial communication):  
+ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0  
 
 Keep this terminal open — it listens for the ESP32.  
-Note: Since the ESP32 is connected to Arduino IDE, the agent won’t work until you close Arduino IDE and reset the ESP32.
+Note: Since the ESP32 is connected to Arduino IDE, the agent won’t work until you close Arduino IDE and reset the ESP32.  
 
-3) In another terminal, source ROS2 and workspace again:
-source /opt/ros/jazzy/setup.bash  # or bashrc
+3) In another terminal, source ROS2 and workspace again:  
+source /opt/ros/jazzy/setup.bash  # or bashrc  
 
-source ~/microros_ws/install/local_setup.bash  # or bashrc
+source ~/microros_ws/install/local_setup.bash  # or bashrc  
 
-To see topics from the ESP32:
-ros2 topic list
+To see topics from the ESP32:  
+ros2 topic list  
 
-To see messages being published or received:
-ros2 topic echo /topic_name
+To see messages being published or received:  
+ros2 topic echo /topic_name  
 
-4) In your ESP32 code, set up communication with the agent:
-set_microros_serial_transports(Serial);
+4) In your ESP32 code, set up communication with the agent:  
+set_microros_serial_transports(Serial);  
 
-This tells the MCU: “Talk to the agent over this serial port.”
+This tells the MCU: “Talk to the agent over this serial port.”  
 
 ---
 
@@ -210,26 +210,26 @@ Each template includes all the necessary setup and boilerplate code. You can cop
 
 ---
 
-## Repository Overview / Folder Structure
+## Repository Overview / Folder Structure  
 
-Here’s how the repository is organized:
-/templates
-    /python_ros2 # Publisher, Subscriber, Publisher+Subscriber templates
-    /esp32_microros # Publisher, Subscriber, Publisher+Subscriber templates
-/mini_projects
-    /project1 # ESP32 Counter Publisher
-    /project2 # LED Control Subscriber
-    /project3 # LED Control Subscriber
-    /project4 # LED Control Subscriber
-    /project5 # LED Control Subscriber
-    /project6 # LED Control Subscriber
-    /project7 # LED Control Subscriber
-    /project8 # LED Control Subscriber
-    /project9 # OpenCV + MediaPipe ROS2 Project
-README.md
+Here’s how the repository is organized:  
+/templates  
+    /python_ros2 # Publisher, Subscriber, Publisher+Subscriber templates  
+    /esp32_microros # Publisher, Subscriber, Publisher+Subscriber templates  
+/mini_projects  
+    /project1 # ESP32 Counter Publisher  
+    /project2 # LED Control Subscriber  
+    /project3 # LED Control Subscriber  
+    /project4 # LED Control Subscriber  
+    /project5 # LED Control Subscriber  
+    /project6 # LED Control Subscriber  
+    /project7 # LED Control Subscriber  
+    /project8 # LED Control Subscriber  
+    /project9 # OpenCV + MediaPipe ROS2 Project  
+README.md  
 
 
-This structure helps you quickly find the templates and mini-projects, and see how everything fits together.
+This structure helps you quickly find the templates and mini-projects, and see how everything fits together.  
 
 ---
 
@@ -240,8 +240,8 @@ This repo is still a work in progress. I’ll keep updating it with:
 - Better or new templates for Python ROS2 and ESP32 micro-ROS  
 - Tips and solutions for any issues I run into while learning  
 
-This is my ROS2 learning journey, so it’s constantly evolving.
-The goal is to make it a useful reference for anyone who wants to learn ROS2 and micro-ROS.
+This is my ROS2 learning journey, so it’s constantly evolving.  
+The goal is to make it a useful reference for anyone who wants to learn ROS2 and micro-ROS.  
 
 
 
