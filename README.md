@@ -208,4 +208,40 @@ There are **6 templates** in total:
 
 Each template includes all the necessary setup and boilerplate code. You can copy it directly, understand each part, and then adapt it to your project’s goals.
 
+---
+
+## Repository Overview / Folder Structure
+
+Here’s how the repository is organized:
+/templates
+    /python_ros2 # Publisher, Subscriber, Publisher+Subscriber templates
+    /esp32_microros # Publisher, Subscriber, Publisher+Subscriber templates
+/mini_projects
+    /project1 # ESP32 Counter Publisher
+    /project2 # LED Control Subscriber
+    /project3 # LED Control Subscriber
+    /project4 # LED Control Subscriber
+    /project5 # LED Control Subscriber
+    /project6 # LED Control Subscriber
+    /project7 # LED Control Subscriber
+    /project8 # LED Control Subscriber
+    /project9 # OpenCV + MediaPipe ROS2 Project
+README.md
+
+
+This structure helps you quickly find the templates and mini-projects, and see how everything fits together.
+
+---
+
+## Future Work / Updates
+
+This repo is still a work in progress. I’ll keep updating it with:   
+- New mini-projects to explore more ROS2 concepts 
+- Better or new templates for Python ROS2 and ESP32 micro-ROS  
+- Tips and solutions for any issues I run into while learning  
+
+This is my ROS2 learning journey, so it’s constantly evolving.
+The goal is to make it a useful reference for anyone who wants to learn ROS2 and micro-ROS.
+
+
 
