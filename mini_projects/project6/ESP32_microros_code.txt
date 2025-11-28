@@ -1,0 +1,94 @@
+#include <Arduino.h>
+#include <micro_ros_arduino.h>
+#include <rcl/rcl.h>
+#include <rclc/rclc.h>
+#include <rclc/executor.h>
+#include <std_msgs/msg/float32.h>
+
+const int trigPin = 5;
+const int echoPin = 18;
+
+#define SOUND_SPEED 0.034
+#define CM_TO_INCH 0.393701
+
+long duration;
+float distance;
+
+// ---------- micro-ROS Globals ----------
+rcl_allocator_t allocator;
+rclc_support_t support;
+rcl_node_t node;
+rcl_publisher_t publisher;
+rclc_executor_t executor;
+
+std_msgs__msg__Float32 msg;
+
+TaskHandle_t distance_task_handle;
+
+// ---------- Publisher Task ----------
+void distance_task(void *pvParameters)
+{
+  while (1)
+  {
+
+    digitalWrite(trigPin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);
+
+    duration = pulseIn(echoPin, HIGH);
+
+    distance = duration * SOUND_SPEED/2;
+
+    msg.data=distance;
+    rcl_publish(&publisher, &msg, NULL);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+  }
+}
+
+void setup()
+{
+    Serial.begin(115200);
+    set_microros_transports();
+    pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+    pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+
+    delay(2000);
+
+    // ----- micro-ROS Init (all in setup) -----
+    allocator = rcl_get_default_allocator();
+
+    rclc_support_init(&support, 0, NULL, &allocator);
+
+    rclc_node_init_default(
+        &node,
+        "Distance_pub",
+        "",
+        &support);
+
+    rclc_publisher_init_default(
+        &publisher,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+        "distance");
+
+    // Executor is required even if not used
+    rclc_executor_init(&executor, &support.context, 1, &allocator);
+
+    // ----- Create FreeRTOS Task -----
+    xTaskCreatePinnedToCore(
+        distance_task,
+        "distance_task",
+        4096,
+        NULL,
+        1,
+        &distance_task_handle,
+        1);
+}
+
+void loop()
+{
+    // Nothing here
+}
+
