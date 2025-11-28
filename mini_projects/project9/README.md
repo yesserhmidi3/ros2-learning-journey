@@ -33,7 +33,7 @@ When I first tried this project, I ran into a problem installing MediaPipe:
 
 ---
 
-## 🐍 How to Run
+##  How to Run
 
 1. Activate your venv:
    ```bash
