@@ -19,23 +19,20 @@ You **only modify a few small parts** depending on your project.
 
 In both publisher and subscriber templates:
 
-from std_msgs.msg import Int32
-msg = Int32()  
-You can replace Int32 with any standard ROS2 message type:
+from std_msgs.msg import Int32  
 
-Bool
+msg = Int32()
 
-Float32
+You can replace **Int32** with any standard ROS2 message type:
 
-Int16
+- Bool
+- Float32
+- Int16
+- String
+- Float32MultiArray
+- Any supported ROS2 message
 
-String
-
-Float32MultiArray
-
-Any supported ROS2 message
-
-If the type changes, update it everywhere the message appears.
+If the type changes, update it **everywhere the message appears**.
 
 ---
 
@@ -44,26 +41,31 @@ If the type changes, update it everywhere the message appears.
 Inside publisher or subscriber setup:
 
 self.publisher_ = self.create_publisher(Int32, 'counter', 10)
+
 Change 'counter' to anything you want.
-Make sure the ROS2 Python nodes use the same topic name.
 
 ---
 
 ## 3. Node Name
+
 Inside node creation:
 
-rclpy.init()
+rclpy.init()  
 node = rclpy.create_node('my_node')
+
 Rename 'my_node' to anything appropriate for your project.
 
 ---
 
 ## 4. Publisher / Subscriber Setup
-Update message type + topic inside the init calls.
+Update **message type + topic** inside the init calls.
 
-Publisher:
+### Publisher:
+
 self.publisher_ = self.create_publisher(Int32, 'your_topic', 10)
-Subscriber:
+
+### Subscriber:
+
 self.subscription = self.create_subscription(
     Int32,
     'your_topic',
@@ -74,12 +76,23 @@ self.subscription = self.create_subscription(
 ---
 
 ## 5. Callback / Publish Logic
-When publishing:
+
+This is the part you customize depending on your behavior.
+
+### When publishing:
+
+Keep this line **exactly as-is**:
+
 msg.data = value  # compute or update value
+
 self.publisher_.publish(msg)
-When subscribing:
+
+### When subscribing:
+
 def listener_callback(self, msg):
+
     print("Received:", msg.data)
+    
 Use msg.data to access the value.
 
 ---
@@ -87,29 +100,22 @@ Use msg.data to access the value.
 ## Everything Else = Don’t Touch
 Keep the following unchanged:
 
-rclpy.init() and rclpy.spin(node)
-
-Node class boilerplate
-
-Import statements for ROS2 packages
-
-Shutdown code: rclpy.shutdown()
+- rclpy.init() and rclpy.spin(node)
+- Node class boilerplate
+- Import statements for ROS2 packages
+- Shutdown code: rclpy.shutdown()
 
 These are standard ROS2 Python boilerplate. You simply reuse them.
 
 ---
 
 ## Summary
-When creating a new ROS2 Python project, you only edit 5 things:
+When creating a new ROS2 Python project, you only edit **5 things**:
 
-Message type
-
-Topic name
-
-Node name
-
-Publisher/subscriber init line
-
-Logic inside your callbacks or publishing loop
+1. Message type
+2. Topic name
+3. Node name
+4. Publisher/subscriber init line
+5. Logic inside your callbacks or publishing loop
 
 Everything else stays unchanged so you can move fast and avoid repeating boilerplate.
