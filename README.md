@@ -174,3 +174,27 @@ set_microros_serial_transports(Serial);
 
 This tells the MCU: “Talk to the agent over this serial port.”
 
+---
+
+## Code Templates
+
+After completing the 3rd mini-project, I created, with the help of ChatGPT, **code templates** to copy and paste at the beginning of each project.  
+This way, we don’t waste time writing everything from scratch, and we don’t have to memorize all the functions we will use.  
+
+I’ll explain each template, what it does, and how to modify it based on your needs. It’s impossible to write all of this from memory, so having templates is extremely useful.  
+
+There are **6 templates** in total:
+
+### ESP32 micro-ROS C Code
+1. **Publisher** – basic template for sending messages from the MCU to ROS2  
+2. **Subscriber** – basic template for receiving messages from ROS2  
+3. **Publisher + Subscriber** – combination template for full-duplex communication
+
+### Python ROS2 Code
+1. **Publisher** – basic ROS2 Python publisher  
+2. **Subscriber** – basic ROS2 Python subscriber  
+3. **Publisher + Subscriber** – combination template for full-duplex communication
+
+Each template includes all the necessary setup and boilerplate code. You can copy it directly, understand each part, and then adapt it to your project’s goals.
+
+
