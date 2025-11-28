@@ -72,3 +72,104 @@ Flow:
 ---
 
 Before going through the projects one by one, I’ll first explain how to create a ROS2 project, how to run it, and how to run a micro-ROS program.
+
+## How to Create and Run a ROS2 Project
+
+### 1) Source ROS2
+source /opt/ros/jazzy/setup.bash
+
+Add it to `~/.bashrc` to do it automatically:
+nano ~/.bashrc
+# add at the end:
+source /opt/ros/jazzy/setup.bash
+
+### 2) Create a workspace
+mkdir -p ros2_ws/src
+cd ros2_ws
+
+### 3) Initialize workspace
+colcon build
+
+### 4) Source workspace
+source install/setup.bash
+
+### 5) Shortcut: build + source
+Add alias to `~/.bashrc`:
+nano ~/.bashrc
+# add at the end:
+alias ccb='colcon build && source install/setup.bash'
+
+Now typing `ccb` builds and sources in one step.
+
+### 6) Create a Python ROS2 package
+cd src
+ros2 pkg create --build-type ament_python name_of_your_package
+
+### 7) Build workspace again
+cd ..
+ccb
+
+### 8) Write ROS2 code
+Open VS Code:
+cd src
+code .
+
+Create a new Python file (example: `first_publisher.py`) inside your package folder.  
+Do not write ROS2 code in `__init__.py`.
+
+### 9) Add file to `setup.py`
+entry_points={
+    'console_scripts': [
+        'first_pub = name_of_your_package.first_publisher:main',
+    ],
+},
+
+Format:
+"command_name = package_name.python_file_name:main"
+
+### 10) Add dependencies in `package.xml`
+<exec_depend>rclpy</exec_depend>
+<exec_depend>std_msgs</exec_depend>
+
+### 11) Build and source
+ccb
+
+### 12) Run your ROS2 program
+ros2 run name_of_your_package first_pub
+
+### 13) Check topics
+ros2 topic list
+ros2 topic echo /topic_name
+
+---
+
+## How to Run a micro-ROS Program on ESP32
+
+1) Upload your sketch to ESP32
+
+2) Start the micro-ROS Agent  
+Source ROS2 and workspace:
+source /opt/ros/jazzy/setup.bash   # or add to bashrc
+source ~/microros_ws/install/local_setup.bash  # or add to bashrc
+
+Run the agent (serial communication):
+ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
+
+Keep this terminal open — it listens for the ESP32.  
+Note: Since the ESP32 is connected to Arduino IDE, the agent won’t work until you close Arduino IDE and reset the ESP32.
+
+3) In another terminal, source ROS2 and workspace again:
+source /opt/ros/jazzy/setup.bash  # or bashrc
+source ~/microros_ws/install/local_setup.bash  # or bashrc
+
+To see topics from the ESP32:
+ros2 topic list
+
+To see messages being published or received:
+ros2 topic echo /topic_name
+
+4) In your ESP32 code, set up communication with the agent:
+set_microros_serial_transports(Serial);
+
+This tells the MCU: “Talk to the agent over this serial port.”
+
