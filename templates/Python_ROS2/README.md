@@ -19,9 +19,8 @@ You **only modify a few small parts** depending on your project.
 
 In both publisher and subscriber templates:
 
-```python
 from std_msgs.msg import Int32
-msg = Int32()
+msg = Int32()  
 You can replace Int32 with any standard ROS2 message type:
 
 Bool
@@ -41,10 +40,9 @@ If the type changes, update it everywhere the message appears.
 ---
 
 ## 2. Topic Name
+
 Inside publisher or subscriber setup:
 
-python
-Copy code
 self.publisher_ = self.create_publisher(Int32, 'counter', 10)
 Change 'counter' to anything you want.
 Make sure the ROS2 Python nodes use the same topic name.
@@ -54,8 +52,6 @@ Make sure the ROS2 Python nodes use the same topic name.
 ## 3. Node Name
 Inside node creation:
 
-python
-Copy code
 rclpy.init()
 node = rclpy.create_node('my_node')
 Rename 'my_node' to anything appropriate for your project.
@@ -66,12 +62,8 @@ Rename 'my_node' to anything appropriate for your project.
 Update message type + topic inside the init calls.
 
 Publisher:
-python
-Copy code
 self.publisher_ = self.create_publisher(Int32, 'your_topic', 10)
 Subscriber:
-python
-Copy code
 self.subscription = self.create_subscription(
     Int32,
     'your_topic',
@@ -83,13 +75,9 @@ self.subscription = self.create_subscription(
 
 ## 5. Callback / Publish Logic
 When publishing:
-python
-Copy code
 msg.data = value  # compute or update value
 self.publisher_.publish(msg)
 When subscribing:
-python
-Copy code
 def listener_callback(self, msg):
     print("Received:", msg.data)
 Use msg.data to access the value.
