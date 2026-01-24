@@ -3,8 +3,8 @@
 In this repo I’ll talk about my ROS2 learning journey. I’ll add the source code, explain everything I did, the problems I found, and how I solved them.  
 
 For me, it’s always been hard to learn something by following a full course, watching YouTube videos, or reading long documentation. The best way I learn is simply by practicing.  
-So when I decided to learn ROS2, I read a little bit of a ROS 2 Documentation documentation ([documentation link](https://docs.ros.org/en/kilted/Tutorials.html)), and I watched a video from a German Y[...]
-After that, I looked for mini-projects. I already knew the concepts I needed to learn, so I gave ChatGPT the materials I had available and asked it to create mini projects that would help me learn ROS[...]
+So when I decided to learn ROS2, I read a bit of the ROS 2 documentation ([documentation link](https://docs.ros.org/en/kilted/Tutorials.html)), and I watched a video from a German YouTuber who made a simple ROS2 counter publisher just to get an idea of what I was going to do ([video link](https://www.youtube.com/watch?v=NDHHPFJnqXY)).  
+After that, I looked for mini-projects. I already knew the concepts I needed to learn, so I gave ChatGPT the materials I had available and asked it to create mini projects that would help me learn ROS2 Jazzy + micro-ROS.  
 
 In this journey, I worked with an ESP32 (for micro-ROS) and Ubuntu 24.04 (ROS2 Jazzy).
 
@@ -354,7 +354,7 @@ This tells the MCU: “Talk to the agent over this serial port.”
 
 ---
 
-## How to Create and Run a ROS2 Project (Gazebo) 
+## How to Create and Run a Gazebo Simulation Project (ROS2)
 
 ### 1) Create a workspace 
 ```bash
@@ -479,7 +479,7 @@ This way, we don’t waste time writing everything from scratch, and we don’t 
 
 I’ll explain each template, what it does, and how to modify it based on your needs. It’s impossible to write all of this from memory, so having templates is extremely useful.  
 
-There are **6 templates** in total:
+There are multiple templates, grouped by purpose:
 
 ### ESP32 micro-ROS C Code
 1. **Publisher** – basic template for sending messages from the MCU to ROS2  
