@@ -1,4 +1,4 @@
-# RViz Templates
+# RViz Template
 
 This is a **template ROS2 Python node** for publishing markers to **RViz2**. It provides a starting point for visualizing points, shapes, or simple animations in RViz using the `visualization_msgs/Marker` message type.  
 
