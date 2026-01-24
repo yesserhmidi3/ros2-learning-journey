@@ -3,10 +3,46 @@
 In this repo I’ll talk about my ROS2 learning journey. I’ll add the source code, explain everything I did, the problems I found, and how I solved them.  
 
 For me, it’s always been hard to learn something by following a full course, watching YouTube videos, or reading long documentation. The best way I learn is simply by practicing.  
-So when I decided to learn ROS2, I read a little bit of a ROS 2 Documentation documentation ([documentation link](https://docs.ros.org/en/kilted/Tutorials.html)), and I watched a video from a German YouTuber who made a simple ROS2 counter publisher just to get an idea of what I was going to do ([video link](https://www.youtube.com/watch?v=NDHHPFJnqXY)).  
-After that, I looked for mini-projects. I already knew the concepts I needed to learn, so I gave ChatGPT the materials I had available and asked it to create mini projects that would help me learn ROS2 Jazzy + micro-ROS.  
+So when I decided to learn ROS2, I read a little bit of a ROS 2 Documentation documentation ([documentation link](https://docs.ros.org/en/kilted/Tutorials.html)), and I watched a video from a German Y[...]
+After that, I looked for mini-projects. I already knew the concepts I needed to learn, so I gave ChatGPT the materials I had available and asked it to create mini projects that would help me learn ROS[...]
 
 In this journey, I worked with an ESP32 (for micro-ROS) and Ubuntu 24.04 (ROS2 Jazzy).
+
+---
+
+## Repository Overview / Folder Structure  
+
+Here’s how the repository is organized:  
+
+/ templates  
+    / python_ros2       # Publisher, Subscriber, Publisher+Subscriber templates  
+    / esp32_microros    # Publisher, Subscriber, Publisher+Subscriber templates  
+    / rviz  
+    / gazebo  
+        / urdf  
+        / launch  
+        / control  
+
+/ mini_projects  
+    / project1          # ESP32 Counter Publisher  
+    / project2          # LED Control Subscriber  
+    / project3          # Button Publisher  
+    / project4          # Potentiometer Publisher  
+    / project5          # LED Dimmer Subscriber  
+    / project6          # Ultrasonic Sensor Publisher  
+    / project7          # Joystick Control  
+    / project8          # Bi-directional Communication  
+    / project9          # OpenCV + MediaPipe ROS2 Project  
+    / project10_rviz        # Multi-sensor visualization with RViz  
+    / project11_gazebo      # Self-balancing robot simulation  
+        / urdf  
+        / launch  
+        / scripts  
+
+README.md
+
+This structure helps you quickly find the templates and mini-projects, and see how everything fits together.  
+(Note: I just added the new templates and the new projects — I kept them in this structure and you'll create their folders soon as you mentioned.)
 
 ---
 
@@ -170,157 +206,209 @@ Before going through the projects one by one, I’ll first explain how to create
 ## How to Create and Run a ROS2 Project  
 
 ### 1) Source ROS2  
-source /opt/ros/jazzy/setup.bash  
+Run:
+```bash
+source /opt/ros/jazzy/setup.bash
+```
 
-Add it to `~/.bashrc` to do it automatically:  
-nano ~/.bashrc  
-add at the end:  
-source /opt/ros/jazzy/setup.bash  
+Add it to `~/.bashrc` to do it automatically:
+```bash
+# Open ~/.bashrc and add the following line at the end:
+echo 'source /opt/ros/jazzy/setup.bash' >> ~/.bashrc
+# Or manually:
+nano ~/.bashrc
+# add at the end:
+# source /opt/ros/jazzy/setup.bash
+```
 
 ### 2) Create a workspace  
-mkdir -p ros2_ws/src  
-cd ros2_ws  
+```bash
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+```
 
 ### 3) Initialize workspace  
-colcon build  
+```bash
+colcon build
+```
 
 ### 4) Source workspace  
-source install/setup.bash  
+```bash
+source install/setup.bash
+```
 
 ### 5) Shortcut: build + source  
-Add alias to `~/.bashrc`:  
-nano ~/.bashrc  
-add at the end:  
-alias ccb='colcon build && source install/setup.bash'  
+Add alias to `~/.bashrc`:
+```bash
+# Open ~/.bashrc and add:
+echo "alias ccb='colcon build && source install/setup.bash'" >> ~/.bashrc
+# Then reload bashrc or open a new terminal:
+source ~/.bashrc
+```
 
-Now typing `ccb` builds and sources in one step.  
+Now typing `ccb` builds and sources in one step.
 
 ### 6) Create a Python ROS2 package  
-cd src  
-ros2 pkg create --build-type ament_python name_of_your_package  
+```bash
+cd src
+ros2 pkg create --build-type ament_python name_of_your_package
+```
 
 ### 7) Build workspace again  
-cd ..  
-ccb  
+```bash
+cd ..
+ccb
+```
 
 ### 8) Write ROS2 code
-Open VS Code:  
-cd src  
-code .  
+Open VS Code:
+```bash
+cd src
+code .
+```
 
 Create a new Python file (example: `first_publisher.py`) inside your package folder.  
 Do not write ROS2 code in `__init__.py`.
 
 ### 9) Add file to `setup.py`
+Example entry_points:
+```python
 entry_points={
     'console_scripts': [
         'first_pub = name_of_your_package.first_publisher:main',
     ],
 },
+```
 
 Format:  
-"command_name = package_name.python_file_name:main"  
+"command_name = package_name.python_file_name:main"
 
 ### 10) Add dependencies in `package.xml`
-<exec_depend>rclpy</exec_depend>  
-<exec_depend>std_msgs</exec_depend>  
+Add:
+```xml
+<exec_depend>rclpy</exec_depend>
+<exec_depend>std_msgs</exec_depend>
+```
 
 ### 11) Build and source  
-ccb  
+```bash
+ccb
+```
 
 ### 12) Run your ROS2 program  
-ros2 run name_of_your_package first_pub  
+```bash
+ros2 run name_of_your_package first_pub
+```
 
 ### 13) Check topics (optional)  
-ros2 topic list  
-ros2 topic echo /topic_name  
+```bash
+ros2 topic list
+ros2 topic echo /topic_name
+```
 
 ---
 
 ## How to Run a micro-ROS Program on ESP32  
 
 ### 1) Upload your sketch to ESP32  
+(Use Arduino IDE or PlatformIO as you normally would.)
 
 ### 2) Start the micro-ROS Agent  
-Source ROS2 and workspace:  
-source /opt/ros/jazzy/setup.bash   # or add to bashrc  
-source ~/microros_ws/install/local_setup.bash  # or add to bashrc  
+Source ROS2 and workspace:
+```bash
+source /opt/ros/jazzy/setup.bash   # or add to bashrc
+source ~/microros_ws/install/local_setup.bash  # or add to bashrc
+```
 
-Run the agent (serial communication):  
-ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0  
+Run the agent (serial communication):
+```bash
+ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
+```
 
 Keep this terminal open — it listens for the ESP32.  
 Note: Since the ESP32 is connected to Arduino IDE, the agent won’t work until you close Arduino IDE and reset the ESP32.  
 
 ### 3) In another terminal, source ROS2 and workspace again:  
-source /opt/ros/jazzy/setup.bash  # or bashrc  
+```bash
+source /opt/ros/jazzy/setup.bash  # or bashrc
+source ~/microros_ws/install/local_setup.bash  # or bashrc
+```
 
-source ~/microros_ws/install/local_setup.bash  # or bashrc  
+To see topics from the ESP32:
+```bash
+ros2 topic list
+```
 
-To see topics from the ESP32:  
-ros2 topic list  
-
-To see messages being published or received:  
-ros2 topic echo /topic_name  
+To see messages being published or received:
+```bash
+ros2 topic echo /topic_name
+```
 
 ### 4) In your ESP32 code, set up communication with the agent:  
-set_microros_serial_transports(Serial);  
+In your ESP32 sketch:
+```c
+set_microros_serial_transports(Serial);
+```
 
 This tells the MCU: “Talk to the agent over this serial port.”  
 
 ---
 
-## How to Create and Run a ROS2 Project 
+## How to Create and Run a ROS2 Project (Gazebo) 
 
 ### 1) Create a workspace 
-mkdir -p gazebo_ws/src
-cd gazebo_ws
+```bash
+mkdir -p ~/gazebo_ws/src
+cd ~/gazebo_ws
+```
 
 ### 2) Build and source the workspace 
+```bash
 colcon build
 source install/setup.bash
-
-(Or use the ccb alias if you added it earlier.)
+# (Or use the ccb alias if you added it earlier.)
+```
 
 ### 3) Create a ROS2 Python package
+```bash
 cd src
 ros2 pkg create --build-type ament_python name_of_your_package
+```
 
 ### 4) Create the project folders 
 Inside your package directory, create the following folders:
+```bash
 cd name_of_your_package
 mkdir urdf launch
-
-Optional :
+# Optional:
 mkdir world
+```
 
-. urdf/ → robot description files (.urdf or .xacro)
-. launch/ → launch files
+. urdf/ → robot description files (.urdf or .xacro)  
+. launch/ → launch files  
 . world/ → Gazebo world files (.sdf)
 
 ### 5) Add your URDF and launch files
-Create your robot URDF inside urdf/
-
-Create your launch file inside launch/
-
+Create your robot URDF inside `urdf/`  
+Create your launch file inside `launch/`  
 Follow the provided Gazebo templates for structure and best practices
 
 Make sure your URDF includes:
-
-Inertial properties
-
-Joints and motors
-
-Gazebo sensor plugins (IMU, etc.) 
+- Inertial properties
+- Joints and motors
+- Gazebo sensor plugins (IMU, etc.) 
 
 ### 6) Register folders in setup.py (IMPORTANT)  
-To make sure ROS2 can find your URDF and launch files, you must register them in setup.py.
+To make sure ROS2 can find your URDF and launch files, you must register them in `setup.py`.
 
-At the top of setup.py, add:
+At the top of `setup.py`, add:
+```python
 import os
 from glob import glob
+```
 
-Then update data_files like this:
+Then update `data_files` like this:
+```python
 data_files=[
     ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
     ('share/' + package_name, ['package.xml']),
@@ -329,12 +417,13 @@ data_files=[
     (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
     (os.path.join('share', package_name, 'urdf'), glob('urdf/*.urdf')),
 ],
+```
 
 If you have other folders (e.g. world/), register them the same way.
 
 ### 7) Add dependencies in package.xml  
 Add the required dependencies:
-
+```xml
 <depend>rclpy</depend>
 <depend>xacro</depend>
 <depend>gazebo_ros</depend>
@@ -344,39 +433,41 @@ Add the required dependencies:
 
 <exec_depend>ros_gz_sim</exec_depend>
 <exec_depend>robot_state_publisher</exec_depend>
-
+```
 Only add what you actually use in your project.
 
 ### 8) Write your control node (main.py)
-.Create your main.py file inside the package
+Create your `main.py` file inside the package.
 
-.Follow the Gazebo main control template
+Typical responsibilities:
+- Subscribe to sensor topics (e.g. IMU)
+- Compute control logic (PID, etc.)
+- Publish commands to motors
 
-.Typical responsibilities:
-    .Subscribe to sensor topics (e.g. IMU)
-    .Compute control logic (PID, etc.)
-    .Publish commands to motors
-
-Don’t forget to register the node in setup.py under console_scripts.
+Don’t forget to register the node in `setup.py` under `console_scripts`.
 
 ### 9) Build and source
+```bash
 cd ~/gazebo_ws
 ccb
+```
 
 ### 10) Launch the simulation
 In one terminal:
-
+```bash
 ros2 launch name_of_your_package launch_file_name.py
+```
 
 This will:
-    .Start Gazebo
-    .Spawn the robot
-    .Bridge Gazebo topics to ROS2
+- Start Gazebo
+- Spawn the robot
+- Bridge Gazebo topics to ROS2
 
 ### 11) Run the control node  
 In another terminal:
-
+```bash
 ros2 run name_of_your_package main_file_name
+```
 
 This starts your ROS2 control loop (PID, logic, etc.).
 
@@ -464,41 +555,6 @@ A ROS2 Python node template for controlling simulated robots.
 
 ---
 
-## Repository Overview / Folder Structure  
-
-Here’s how the repository is organized:  
-
-/templates  
-    /python_ros2       # Publisher, Subscriber, Publisher+Subscriber templates  
-    /esp32_microros    # Publisher, Subscriber, Publisher+Subscriber templates  
-    /rviz
-    /gazebo
-        /urdf
-        /launch
-        /control
-
-/mini_projects  
-    /project1          # ESP32 Counter Publisher  
-    /project2          # LED Control Subscriber  
-    /project3          # Button Publisher  
-    /project4          # Potentiometer Publisher  
-    /project5          # LED Dimmer Subscriber  
-    /project6          # Ultrasonic Sensor Publisher  
-    /project7          # Joystick Control  
-    /project8          # Bi-directional Communication  
-    /project9          # OpenCV + MediaPipe ROS2 Project  
-    /project10_rviz        # Multi-sensor visualization with RViz
-    /project11_gazebo      # Self-balancing robot simulation
-        /urdf
-        /launch
-        /scripts
-
-README.md
-
-This structure helps you quickly find the templates and mini-projects, and see how everything fits together.  
-
----
-
 ## Future Work / Updates
 
 This repo is still a work in progress. I’ll keep updating it with:   
@@ -508,6 +564,3 @@ This repo is still a work in progress. I’ll keep updating it with:
 
 This is my ROS2 learning journey, so it’s constantly evolving.  
 The goal is to make it a useful reference for anyone who wants to learn ROS2 and micro-ROS.  
-
-
-
