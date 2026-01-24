@@ -14,35 +14,43 @@ In this journey, I worked with an ESP32 (for micro-ROS) and Ubuntu 24.04 (ROS2 J
 
 Here’s how the repository is organized:  
 
-/ templates  
-    / python_ros2       # Publisher, Subscriber, Publisher+Subscriber templates  
-    / esp32_microros    # Publisher, Subscriber, Publisher+Subscriber templates  
-    / rviz  
-    / gazebo  
-        / urdf  
-        / launch  
-        / control  
-
-/ mini_projects  
-    / project1          # ESP32 Counter Publisher  
-    / project2          # LED Control Subscriber  
-    / project3          # Button Publisher  
-    / project4          # Potentiometer Publisher  
-    / project5          # LED Dimmer Subscriber  
-    / project6          # Ultrasonic Sensor Publisher  
-    / project7          # Joystick Control  
-    / project8          # Bi-directional Communication  
-    / project9          # OpenCV + MediaPipe ROS2 Project  
-    / project10_rviz        # Multi-sensor visualization with RViz  
-    / project11_gazebo      # Self-balancing robot simulation  
-        / urdf  
-        / launch  
-        / scripts  
-
-README.md
+```text
+ros2-learning-journey/
+├── templates/
+│   ├── python_ros2/        # Publisher, Subscriber, Publisher+Subscriber templates
+│   │   ├── publisher/
+│   │   ├── subscriber/
+│   │   └── pub_sub/
+│   ├── esp32_microros/     # Publisher, Subscriber, Publisher+Subscriber templates
+│   │   ├── publisher/
+│   │   ├── subscriber/
+│   │   └── pub_sub/
+│   ├── rviz/               # RViz configuration templates
+│   └── gazebo/
+│       ├── urdf/           # URDF templates
+│       ├── launch/         # Gazebo/ROS2 launch templates
+│       └── control/        # Control node templates (PID, controllers)
+│
+├── mini_projects/
+│   ├── project1/           # ESP32 Counter Publisher
+│   ├── project2/           # LED Control Subscriber
+│   ├── project3/           # Button Publisher
+│   ├── project4/           # Potentiometer Publisher
+│   ├── project5/           # LED Dimmer Subscriber
+│   ├── project6/           # Ultrasonic Sensor Publisher
+│   ├── project7/           # Joystick Control
+│   ├── project8/           # Bi-directional Communication
+│   ├── project9/           # OpenCV + MediaPipe ROS2 Project
+│   ├── project10_rviz/     # Multi-sensor visualization with RViz
+│   └── project11_gazebo/   # Self-balancing robot simulation
+│       ├── urdf/
+│       ├── launch/
+│       └── scripts/
+│
+└── README.md
+```
 
 This structure helps you quickly find the templates and mini-projects, and see how everything fits together.  
-(Note: I just added the new templates and the new projects — I kept them in this structure and you'll create their folders soon as you mentioned.)
 
 ---
 
