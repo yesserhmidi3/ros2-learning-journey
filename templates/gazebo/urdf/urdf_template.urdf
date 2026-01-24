@@ -1,0 +1,29 @@
+<link name="part_name">
+  <visual>
+    <geometry><box size="0.1 0.1 0.1"/></geometry>
+  </visual>
+  <collision>
+    <geometry><box size="0.1 0.1 0.1"/></geometry>
+  </collision>
+  <inertial>
+    <mass value="1.0"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+  </inertial>
+</link>
+
+<gazebo reference="link_name">
+  <sensor name="my_sensor" type="imu"> <always_on>1</always_on>
+    <update_rate>100</update_rate>
+    <topic>sensor_data</topic>
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+  </sensor>
+</gazebo>
+
+<gazebo>
+  <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+    <left_joint>left_wheel_joint</left_joint>
+    <right_joint>right_wheel_joint</right_joint>
+    <wheel_separation>0.2</wheel_separation>
+    <wheel_diameter>0.1</wheel_diameter>
+    <topic>cmd_vel</topic> </plugin>
+</gazebo>
