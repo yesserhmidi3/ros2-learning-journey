@@ -38,7 +38,6 @@ rviz2
 ```
 - Set the **Fixed Frame** to `map`.
 - Add a **Marker** display and subscribe to the topic `/visualization_marker`.
-You should see a red sphere moving along the X-axis.
 
 ---
 
