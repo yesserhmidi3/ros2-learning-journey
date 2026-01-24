@@ -32,27 +32,27 @@ source ~/ros2_ws/install/setup.bash
 ros2 run <your_package_name> rviz_template
 ```
 
-3. Open RViz2 to visualize the marker:
+3. Open **RViz2** to visualize the marker:
 ```bash
 rviz2
 ```
-  .Set the Fixed Frame to map.
-  .Add a Marker display and subscribe to the topic /visualization_marker.
+  .Set the **Fixed Frame** to 'map'.
+  .Add a **Marker** display and subscribe to the topic '/visualization_marker'.
 You should see a red sphere moving along the X-axis.
 
 ---
 
 ## Concepts Reinforced
-.Publishing Marker messages in ROS2
-.Setting marker properties: type, color, scale, pose, and lifetime
-.Animating markers with a timer callback
-.Visualizing ROS2 topics in RViz2
+- Publishing 'Marker' messages in ROS2
+- Setting marker properties: type, color, scale, pose, and lifetime
+- Animating markers with a timer callback
+- Visualizing ROS2 topics in RViz2
 
 ---
 
 ## How to Customize
-.Change marker.type to visualize other shapes (CUBE, ARROW, LINE_STRIP, etc.)
-.Modify marker.color to change the color or transparency
-.Adjust marker.scale for size
-.Change the movement logic in publish_marker() to animate differently
-.Add multiple markers with unique marker.id and marker.ns
+- Change 'marker.type' to visualize other shapes (CUBE, ARROW, LINE_STRIP, etc.)
+- Modify 'marker.color' to change the color or transparency
+- Adjust 'marker.scale' for size
+- Change the movement logic in 'publish_marker()' to animate differently
+- Add multiple markers with unique 'marker.id' and 'marker.ns'
