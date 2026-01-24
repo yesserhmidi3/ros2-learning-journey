@@ -32,6 +32,7 @@ We use:
 1. **Start the micro-ROS agent** (UDP example):
    ```bash
    ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888
+   ```
 2. **Upload ESP32 code** to the board. Make sure WiFi credentials and micro-ROS IP/port match your network.
 3. **Run the ROS2 node** on your PC:
    ```bash
@@ -50,4 +51,4 @@ We use:
 - Button marker **deletes the cube** when released for better visualization.
 - Topics and frame names (`base_link`) must match RViz configuration.
 
-> For more details on RViz marker setup, see the [RViz template README](../templates/rviz/README.md)
+> For more details on RViz marker setup, see the [RViz template README](https://github.com/yesserhmidi3/ros2-learning-journey/tree/main/templates/rviz)
