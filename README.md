@@ -565,10 +565,17 @@ A ROS2 Python node template for controlling simulated robots.
 
 ## Future Work / Updates
 
-This repo is still a work in progress. I’ll keep updating it with:   
-- New mini-projects to explore more ROS2 concepts 
-- Better or new templates for Python ROS2 and ESP32 micro-ROS  
-- Tips and solutions for any issues I run into while learning  
+This repository is a **work in progress** and will be continuously updated as I keep learning and experimenting with ROS 2 and robotics.
 
-This is my ROS2 learning journey, so it’s constantly evolving.  
-The goal is to make it a useful reference for anyone who wants to learn ROS2 and micro-ROS.  
+Planned and ongoing work includes:
+- New mini-projects to explore more advanced ROS 2 concepts  
+- Improved and cleaner templates for Python ROS 2 and ESP32 micro-ROS  
+- Notes, tips, and solutions to issues I encounter during development  
+
+### Current Focus
+I am currently working on a **spider robot project**, where:
+- The robot is **simulated in Gazebo**
+- ROS 2 is used for communication and system integration
+- **Reinforcement Learning (RL)** is explored for control
+
+This repository reflects my personal ROS 2 learning journey, so it is **constantly evolving**.  
