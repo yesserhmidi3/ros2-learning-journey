@@ -559,7 +559,79 @@ A ROS2 Python node template for controlling simulated robots.
 - Control loops
 - PID control
 - Closed-loop simulation
+  #### 4) Joint Control Template (ros2_control)
+  Once you have a URDF, you need a way to send commands (like position or velocity) to the joints. This template uses the ros2_control framework to manage joint movements.
+  
+  **Step 1: Create config/controllers.yaml**
+  This file defines which controllers to load and which joints they handle.
+  ```yaml
+  controller_manager:
+    ros__parameters:
+      update_rate: 100
+      use_sim_time: true
+  
+      joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+  
+      joint_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+  
+  joint_trajectory_controller:
+    ros__parameters:
+      joints:
+        - joint_name_1
+        - joint_name_2
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
+  ```
+  **Step 2: Add ros2_control to URDF**
+  Add this block before the </robot> tag to tell Gazebo to use the control plugin.
+  ```xml
+  <ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    <joint name="joint_name_1">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
 
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find your_package_name)/config/controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+  ```
+  **Step 3: Update launch.py (Spawners)**
+  Add these nodes to your LaunchDescription to start the controller manager and the joint controller.
+  ```python
+  spawn_jsb = Node(
+    package="controller_manager",
+    executable="spawner",
+    arguments=["joint_state_broadcaster"],
+  )
+
+  spawn_jtc = Node(
+      package="controller_manager",
+      executable="spawner",
+      arguments=["joint_trajectory_controller"],
+  )
+  ```
+  **Step 4: Update setup.py & Test**
+  Include the config folder in your data_files:
+    ```python
+  (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
+  ```
+  Test by publishing a trajectory to the topic:
+  ```bash
+  ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory \
+  "{joint_names: ['joint_name_1'], points: [{positions: [0.8], time_from_start: {sec: 1, nanosec: 0}}]}"
+  ```
 
 ---
 
