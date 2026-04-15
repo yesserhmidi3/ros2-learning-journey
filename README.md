@@ -552,6 +552,16 @@ The configuration map for the `ros2_control` framework.
 
 ---
 
+## Resources & Credits
+
+This journey was made easier thanks to these excellent resources:
+* **[Robotics Backend](https://roboticsbackend.com/category/ros2/)** – An amazing site for practical, project-based ROS 2 tutorials.
+* **[ros2_control Documentation](https://control.ros.org/jazzy/index.html)** – The official guide for the ROS 2 control framework (essential for the Gazebo templates).
+* **[Official ROS 2 Documentation](https://docs.ros.org/en/jazzy/)** – The primary source for technical details and API references.
+
+---
+
+
 ## Future Work / Updates
 
 This repository is a **work in progress** and will be continuously updated as I keep learning and experimenting with ROS 2 and robotics.
