@@ -494,10 +494,14 @@ There are multiple templates, grouped by purpose:
 2. **Subscriber** – basic template for receiving messages from ROS2  
 3. **Publisher + Subscriber** – combination template for full-duplex communication
 
+**For detailed usage of these MCU templates, see the [ESP32 micro-ROS README](templates/ESP32_MicroROS/README.md).**
+
 ### Python ROS2 Code
 1. **Publisher** – basic ROS2 Python publisher  
 2. **Subscriber** – basic ROS2 Python subscriber  
 3. **Publisher + Subscriber** – combination template for full-duplex communication
+
+**For detailed usage of these Python templates, see the [Python ROS2 README](templates/Python_ROS2/README.md).**
 
 I started using these templates beginning from project 4, and they made the workflow much faster and cleaner.  
 Each template includes all the necessary setup and boilerplate code. You can copy it directly, understand each part, and then adapt it to your project’s goals.  
@@ -519,6 +523,8 @@ This template provides a ready-to-use RViz configuration for visualizing ROS2 to
 **Skills reinforced:**
 - Understanding frames and topics
 - Using RViz as a debugging and development tool
+
+**For detailed guide on the visualization setup, see the [RViz Template README](templates/rviz/README.md).**
 
 ### Gazebo Templates
 
