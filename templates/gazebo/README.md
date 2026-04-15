@@ -58,4 +58,12 @@ For specific code breakdowns and line-by-line explanations, visit each folder:
 
 ---
 
+## Resources I Used to Understand This
+These are the specific guides that helped me understand how .yaml and launch files work, their structure, and how and what to add to the URDF as plugins:
+
+* **[Robotics Backend: ROS 2 Gazebo Tutorials](https://roboticsbackend.com/category/ros2/)** – This was my main source for learning how the `robot_state_publisher` and control loops connect.
+* **[gz_ros2_control Plugin Guide](https://control.ros.org/jazzy/doc/gz_ros2_control/doc/index.html)** – This is what I used to understand exactly how to implement the control plugins inside the URDF to bridge Gazebo with ROS 2.
+
+---
+
 > **Important** > This modularity is the strength of ROS 2. You can use the **exact same** YAML and Control scripts for a real physical robot just by changing one line in your URDF (the hardware plugin). This is known as **Hardware Abstraction**.
