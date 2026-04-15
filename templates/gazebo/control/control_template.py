@@ -1,35 +1,59 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
-from sensor_msgs.msg import Imu # Change this based on your sensor
+from sensor_msgs.msg import Imu # Example: change to your sensor type
 
-class RobotController(Node):
+class MainController(Node):
     def __init__(self):
-        super().__init__('robot_controller')
+        super().__init__('main_controller')
         
-        # 1. Pub/Sub Setup
+        # 1. INPUT: Subscribe to Sensors
+        self.sub = self.create_subscription(Imu, '/imu', self.control_loop, 10)
+        
+        # 2. OUTPUT: Publish to Actuators
         self.pub = self.create_publisher(Twist, '/cmd_vel', 10)
-        self.sub = self.create_subscription(Imu, '/sensor_data', self.callback, 10)
         
-        # 2. Control Variables
-        self.target = 0.0
-        self.kp = 1.0 # Tune me!
+        # 3. LOGIC: Control Variables (PID)
+        self.target = 0.0  # Desired state
+        self.kp = 1.0      # Proportional Gain
+        self.ki = 0.0      # Integral Gain
+        self.kd = 0.1      # Derivative Gain
+        
+        self.prev_error = 0.0
+        self.integral = 0.0
 
-    def callback(self, msg):
-        # 3. Read Sensor (Processing Logic)
-        current_value = msg.orientation.x # Example
+    def control_loop(self, msg):
+        # --- A. Read Sensor ---
+        # Example: Using orientation for a self-balancing robot
+        current_value = msg.orientation.x 
         
-        # 4. Control Logic (The Brain)
+        # --- B. Compute PID Logic ---
         error = self.target - current_value
-        output = self.kp * error
+        self.integral += error
+        derivative = error - self.prev_error
         
-        # 5. Send Action
+        output = (self.kp * error) + (self.ki * self.integral) + (self.kd * derivative)
+        
+        self.prev_error = error
+        
+        # --- C. Send Action ---
         cmd = Twist()
-        cmd.linear.x = float(output)
+        cmd.linear.x = float(output) 
         self.pub.publish(cmd)
+        
+        # Log data for debugging
+        self.get_logger().info(f'Error: {error:.2f} | Output: {output:.2f}')
 
 def main():
     rclpy.init()
-    rclpy.spin(RobotController())
-    rclpy.shutdown()
-    
+    node = MainController()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
