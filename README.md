@@ -521,117 +521,34 @@ This template provides a ready-to-use RViz configuration for visualizing ROS2 to
 - Using RViz as a debugging and development tool
 
 ### Gazebo Templates
+
+These templates provide a modular foundation for building and controlling robots in a simulated environment using Gazebo Harmonic and ROS 2 Jazzy.
+
 #### 1) URDF Template
-A reusable URDF template for creating simulated robots.
+A reusable model for defining a robot's physical structure.
+* **What it includes:** Link/joint hierarchy, inertial properties, and visual/collision tags.
+* **Use case:** Creating physically accurate robot models without writing XML boilerplate from scratch.
+* **Skills:** Robot modeling, mass/inertia distribution, and URDF syntax.
 
-**What it includes:**
-- Link and joint structure
-- Inertial properties
-- Motor definitions
-- Gazebo sensor plugins (e.g., IMU)
-
-**Use case:**
-- Quickly define physically realistic robots
-- Avoid rewriting boilerplate URDF and Gazebo tags
-
-**Skills reinforced:**
-- Robot modeling
-- Understanding robot dynamics
-- Simulation realism
 #### 2) Launch File Template
-A ROS2 launch file template to:
-- Spawn a robot into a Gazebo world
-- Load the URDF
-- Bridge Gazebo topics to ROS2
+The orchestration script to start the simulation environment.
+* **What it includes:** Logic to start Gazebo, spawn the robot, and bridge simulation data to ROS 2.
+* **Use case:** Automating the startup of multiple nodes and ensuring Gazebo finds your meshes.
+* **Skills:** Python Launch API, resource pathing, and environment configuration.
+
 #### 3) Main Control Node Template
-A ROS2 Python node template for controlling simulated robots.
+A Python node for high-level robot logic and closed-loop control.
+* **What it includes:** Subscriber/Publisher boilerplate with a structured PID controller loop.
+* **Use case:** Implementing stabilization or autonomous navigation logic.
+* **Skills:** Real-time sensor processing, PID tuning, and control theory.
 
-**What it includes:**
-- Subscription to sensor topics (e.g., IMU)
-- Publishing commands to actuators
-- PID control structure (easily tunable)
+#### 4) Controller Config Template (.yaml)
+The configuration map for the `ros2_control` framework.
+* **What it includes:** Controller types (Trajectory, State Broadcaster) and joint parameter definitions.
+* **Use case:** Defining how the robot's "nervous system" handles motor commands and feedback.
+* **Skills:** Resource management, hardware interface mapping, and YAML configuration.
 
-**Use case:**
-- Rapidly implement control logic
-- Focus on control algorithms instead of ROS2 boilerplate
-
-**Skills reinforced:**
-- Control loops
-- PID control
-- Closed-loop simulation
-#### 4) Joint Control Template (ros2_control)
-Once you have a URDF, you need a way to send commands (like position or velocity) to the joints. This template uses the ros2_control framework to manage joint movements.
-  
-**Step 1: Create config/controllers.yaml**
-  This file defines which controllers to load and which joints they handle.
-  ```yaml
-  controller_manager:
-    ros__parameters:
-      update_rate: 100
-      use_sim_time: true
-  
-      joint_state_broadcaster:
-        type: joint_state_broadcaster/JointStateBroadcaster
-  
-      joint_trajectory_controller:
-        type: joint_trajectory_controller/JointTrajectoryController
-  
-  joint_trajectory_controller:
-    ros__parameters:
-      joints:
-        - joint_name_1
-        - joint_name_2
-      command_interfaces:
-        - position
-      state_interfaces:
-        - position
-        - velocity
-  ```
-**Step 2: Add ros2_control to URDF**
-Add this block before the </robot> tag to tell Gazebo to use the control plugin.
-  ```xml
-  <ros2_control name="GazeboSimSystem" type="system">
-    <hardware>
-      <plugin>gazebo_ros2_control/GazeboSimSystem</plugin>
-    </hardware>
-    <joint name="joint_name_1">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-  </ros2_control>
-
-  <gazebo>
-    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-      <parameters>$(find your_package_name)/config/controllers.yaml</parameters>
-    </plugin>
-  </gazebo>
-  ```
-**Step 3: Update launch.py (Spawners)**
-Add these nodes to your LaunchDescription to start the controller manager and the joint controller.
-  ```python
-  spawn_jsb = Node(
-    package="controller_manager",
-    executable="spawner",
-    arguments=["joint_state_broadcaster"],
-  )
-
-  spawn_jtc = Node(
-      package="controller_manager",
-      executable="spawner",
-      arguments=["joint_trajectory_controller"],
-  )
-  ```
-**Step 4: Update setup.py & Test**
-Include the config folder in your data_files:
-    ```python
-  (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
-  ```
-Test by publishing a trajectory to the topic:
-  ```bash
-  ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory \
-  "{joint_names: ['joint_name_1'], points: [{positions: [0.8], time_from_start: {sec: 1, nanosec: 0}}]}"
-  ```
+**For detailed guides on how to use these templates together, see the [Gazebo Templates README](templates/gazebo/README.md).**
 
 ---
 
